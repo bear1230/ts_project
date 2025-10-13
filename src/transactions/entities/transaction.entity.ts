@@ -9,7 +9,7 @@ export enum TransactionStatus {
 }
 
 @Entity('transactions')
-export class Transaction {  // ✅ export 있음
+export class Transaction {
     @PrimaryGeneratedColumn()
     id: number;
 

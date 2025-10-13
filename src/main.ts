@@ -4,11 +4,15 @@ import { AppModule } from './app.module';
 import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
 import {SeedService} from "./common/seed/seed.service";
 import { AllExceptionsFilter } from './common/filters/http-exception.filter';
+import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+
 
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
+
     app.useGlobalFilters(new AllExceptionsFilter());
+    app.useGlobalInterceptors(new TransformInterceptor());
 
     app.enableCors({
         origin: 'http://localhost:3001',
