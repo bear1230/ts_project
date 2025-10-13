@@ -6,12 +6,16 @@ import { AppService } from './app.service';
 import { ClientsModule } from './clients/clients.module';
 import { ProductsModule } from './products/products.module';
 import { TransactionsModule } from './transactions/transactions.module';
+import { SeedModule } from './common/seed/seed.module';
+
 
 @Module({
     imports: [
+        SeedModule,
         ConfigModule.forRoot({
             isGlobal: true,
             envFilePath: '.env',
+
         }),
 
         TypeOrmModule.forRootAsync({
