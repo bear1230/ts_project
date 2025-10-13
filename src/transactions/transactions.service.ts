@@ -131,4 +131,22 @@ export class TransactionsService {
         return `TRX-${dateStr}-${sequence.toString().padStart(3, '0')}`;
     }
 
+    async getPeriodStatistics(startDate: Date, endDate: Date) {
+        return await this.transactionsRepository
+            .createQueryBuilder('transaction')
+            .leftJoin('transaction.client', 'client')
+            .leftJoin('transaction.items', 'item')
+            .select('client.name', 'clientName')
+            .addSelect('COUNT(transaction.id)', 'transactionCount')
+            .addSelect('SUM(transaction.total_amount)', 'totalAmount')
+            .addSelect('SUM(transaction.tax_amount)', 'totalTax')
+            .addSelect('SUM(transaction.final_amount)', 'finalAmount')
+            .where('transaction.transaction_date >= :startDate', { startDate })
+            .andWhere('transaction.transaction_date <= :endDate', { endDate })
+            .andWhere('transaction.status = :status', { status: '완료' })
+            .groupBy('client.id')
+            .orderBy('totalAmount', 'DESC')
+            .getRawMany();
+    }
+
 }
