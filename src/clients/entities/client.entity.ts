@@ -7,7 +7,7 @@ export enum ClientType {
 }
 
 @Entity('clients')
-export class Client {  // ✅ export 있음
+export class Client {
     @PrimaryGeneratedColumn()
     id: number;
 
