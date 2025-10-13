@@ -88,6 +88,28 @@ export class TransactionsService {
         }
     }
 
+    async update(id: number, updateTransactionDto: UpdateTransactionDto): Promise<Transaction> {
+        const transaction = await this.findOne(id);
+
+        if (transaction.status === TransactionStatus.COMPLETED) {
+            throw new BadRequestException('완료된 전표는 수정할 수 없습니다.');
+        }
+
+        Object.assign(transaction, updateTransactionDto);
+        return await this.transactionsRepository.save(transaction);
+    }
+
+    async remove(id: number): Promise<void> {
+        const transaction = await this.findOne(id);
+
+        if (transaction.status === TransactionStatus.COMPLETED) {
+            throw new BadRequestException('완료된 전표는 삭제할 수 없습니다.');
+        }
+
+        await this.transactionsRepository.remove(transaction);
+    }
+
+
     private async generateTransactionNumber(): Promise<string> {
         const today = new Date();
         const dateStr = today.toISOString().slice(0, 10).replace(/-/g, '');
