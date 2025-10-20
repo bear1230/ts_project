@@ -6,3 +6,4 @@
 - **Database**: PostgreSQL
 - **ORM**: TypeORM
 - **Documentation**: Swagger
+- **Infra**: Docker
