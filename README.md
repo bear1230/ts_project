@@ -5,5 +5,4 @@
 - **Backend**: Node.js, TypeScript, NestJS
 - **Database**: PostgreSQL
 - **ORM**: TypeORM
-- **Authentication**: JWT
 - **Documentation**: Swagger
